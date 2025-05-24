@@ -4,11 +4,9 @@ import App from './App.jsx'
 // import { KindeProvider } from '@kinde-oss/kinde-auth-react'
 import { BrowserRouter as Router } from 'react-router-dom'
 
-import KindeAuth from "@kinde-oss/kinde-auth-react";
+import { KindeProvider } from "@kinde-oss/kinde-auth-react";
 
-
-
-const { KindeProvider } = KindeAuth;
+// const { KindeProvider } = KindeAuth;
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
