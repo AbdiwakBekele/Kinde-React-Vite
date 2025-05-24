@@ -1,27 +1,52 @@
-import React from 'react';
 import { useKindeAuth } from '@kinde-oss/kinde-auth-react';
-import { LoginLink, LogoutLink, RegisterLink } from '@kinde-oss/kinde-auth-react/components';
+// import { LoginLink, LogoutLink, RegisterLink } from '@kinde-oss/kinde-auth-react/components'; //v5.4.1
+import React, { useEffect } from 'react';
 
 
 export default function App() {
-  // const { isAuthenticated, user } = useKindeAuth();
 
-  const { isAuthenticated, user, login, logout } = useKindeAuth();
+  const { isAuthenticated, user, login, logout, isLoading } = useKindeAuth();
 
-  console.log('KindeAuth exports:', isAuthenticated);
+  // Log once on mount
+  useEffect(() => {
+    console.log('Initial mount log:');
+    console.log('isLoading:', isLoading);
+    console.log('isAuthenticated:', isAuthenticated);
+    console.log('user:', user);
+  }, []);
 
+  // Log whenever any state changes
+  useEffect(() => {
+    console.log('State change detected:');
+    console.log({ isLoading, isAuthenticated, user });
+  }, [isLoading, isAuthenticated, user]);
+
+
+  if (isLoading) return <p>Loading...</p>;
 
   return (
-    <div style={{ textAlign: 'center', marginTop: '4rem' }}>
-      <h1>Welcome to Kinde + Vite</h1>
-
-      {isAuthenticated ? (
+    <div style={{ padding: '2rem' }}>
+      <h1>Kinde Auth Demo</h1>
+      {!isAuthenticated ? (
         <>
-          <p>Hello, {user?.given_name || 'User'}!</p>
-          <LogoutLink>Sign Out</LogoutLink>
+          {/* For v5.4.1 */}
+          {/* <LoginLink>Sign In</LoginLink> | <RegisterLink>Sign up</RegisterLink> */}
+
+
+          {/* For v4.0.4 */}
+          <button onClick={login}>Login</button>
+
         </>
       ) : (
-        <LoginLink>Sign In / Sign Up</LoginLink>
+        <>
+          <p>Welcome, {user?.given_name || 'User'}!</p>
+
+          {/* For v5.4.1 */}
+          {/* <LogoutLink>Sign out</LogoutLink> */}
+
+          {/* For v4.0.4 */}
+          <button onClick={logout}>Logout</button>
+        </>
       )}
     </div>
   );
